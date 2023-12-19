@@ -1,20 +1,7 @@
-FROM python:3.9.6-alpine
-
-# Set the working directory
+FROM python:3.9-slim
 WORKDIR /app
-
-# Set environmental variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
-# Copy over the requirements file and install the dependencies
-COPY ./requirements.txt .
-RUN pip install --no-cache-dir --upgrade -r ./requirements.txt
-
-# Copy over the source code
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-
-# Expose the port
-EXPOSE 80
-
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+EXPOSE 8000
+CMD ["uvicorn", "router.main:app", "--host", "0.0.0.0", "--port", "8000"]
